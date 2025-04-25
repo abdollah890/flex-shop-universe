@@ -1,4 +1,3 @@
-
 import { Product, Category } from "../types";
 
 export const products: Product[] = [
@@ -21,16 +20,22 @@ export const products: Product[] = [
         userName: "AudioPhile",
         rating: 5,
         comment: "Best headphones I've ever owned. The noise cancellation is exceptional!",
-        date: "2023-10-15"
+        date: "2023-10-15",
+        productId: "1",
+        userId: "user1"
       },
       {
         id: "r2",
         userName: "MusicLover",
         rating: 4.5,
         comment: "Great sound quality and comfortable for long listening sessions.",
-        date: "2023-09-22"
+        date: "2023-09-22",
+        productId: "1",
+        userId: "user2"
       }
-    ]
+    ],
+    createdAt: "2023-01-15T08:00:00Z",
+    updatedAt: "2023-06-20T14:30:00Z"
   },
   {
     id: "2",
@@ -51,9 +56,13 @@ export const products: Product[] = [
         userName: "FitnessGuru",
         rating: 5,
         comment: "Tracks everything I need and the battery lasts for days!",
-        date: "2023-10-05"
+        date: "2023-10-05",
+        productId: "2",
+        userId: "user3"
       }
-    ]
+    ],
+    createdAt: "2023-02-10T10:15:00Z",
+    updatedAt: "2023-07-12T16:45:00Z"
   },
   {
     id: "3",
@@ -67,7 +76,9 @@ export const products: Product[] = [
     category: "home",
     inStock: true,
     rating: 4.2,
-    reviews: []
+    reviews: [],
+    createdAt: "2023-03-05T09:30:00Z",
+    updatedAt: "2023-08-18T11:20:00Z"
   },
   {
     id: "4",
@@ -82,7 +93,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     rating: 4.7,
-    reviews: []
+    reviews: [],
+    createdAt: "2023-04-12T13:45:00Z",
+    updatedAt: "2023-09-05T08:30:00Z"
   },
   {
     id: "5",
@@ -96,7 +109,9 @@ export const products: Product[] = [
     category: "beauty",
     inStock: true,
     rating: 4.9,
-    reviews: []
+    reviews: [],
+    createdAt: "2023-05-20T15:00:00Z",
+    updatedAt: "2023-10-02T10:15:00Z"
   },
   {
     id: "6",
@@ -110,7 +125,9 @@ export const products: Product[] = [
     category: "electronics",
     inStock: true,
     rating: 4.6,
-    reviews: []
+    reviews: [],
+    createdAt: "2023-06-08T11:30:00Z",
+    updatedAt: "2023-11-15T14:20:00Z"
   }
 ];
 
