@@ -1,13 +1,23 @@
 
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const { itemCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Temporary mock user for demonstration
+  const mockUser = { role: 'admin' };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -38,7 +48,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Search and Cart */}
+          {/* Search, Cart and User Menu */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" size="icon">
               <Search size={20} />
@@ -51,6 +61,44 @@ const Navbar = () => {
                 )}
               </Button>
             </Link>
+            
+            {/* User/Admin Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <User size={20} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/orders">My Orders</Link>
+                </DropdownMenuItem>
+                {mockUser?.role === 'admin' && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin">Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/products">Products</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/reviews">Reviews</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,6 +148,37 @@ const Navbar = () => {
             >
               About
             </Link>
+            
+            {/* Admin links for mobile */}
+            {mockUser?.role === 'admin' && (
+              <>
+                <div className="border-t border-gray-200 my-2 pt-2">
+                  <h3 className="font-medium text-gray-900 mb-2">Admin</h3>
+                  <Link 
+                    to="/admin" 
+                    className="block py-2 text-gray-700 hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    to="/admin/products" 
+                    className="block py-2 text-gray-700 hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Products
+                  </Link>
+                  <Link 
+                    to="/admin/reviews" 
+                    className="block py-2 text-gray-700 hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Reviews
+                  </Link>
+                </div>
+              </>
+            )}
+            
             <div className="pt-2 flex items-center">
               <Button variant="ghost" size="sm">
                 <Search size={18} />

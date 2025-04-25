@@ -12,6 +12,12 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 
+// Admin routes
+import AdminDashboard from "./pages/admin/Dashboard";
+import ProductManagement from "./pages/admin/ProductManagement";
+import ProductForm from "./pages/admin/ProductForm";
+import ReviewManagement from "./pages/admin/ReviewManagement";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -22,11 +28,21 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* User routes */}
             <Route path="/" element={<Index />} />
             <Route path="/products" element={<ProductList />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/products" element={<ProductManagement />} />
+            <Route path="/admin/products/new" element={<ProductForm />} />
+            <Route path="/admin/products/edit/:id" element={<ProductForm />} />
+            <Route path="/admin/reviews" element={<ReviewManagement />} />
+            
+            {/* Not found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
