@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,11 +7,24 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Edit, Trash } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from '@/components/ui/use-toast';
 
 const ProductManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [deleteProductId, setDeleteProductId] = useState<string | null>(null);
+  const [productsList, setProductsList] = useState(products);
 
   const handleSort = (column: string) => {
     if (sortBy === column) {
@@ -41,6 +53,25 @@ const ProductManagement = () => {
     }
     return 0;
   });
+
+  const handleDeleteProduct = (id: string) => {
+    setDeleteProductId(id);
+  };
+
+  const confirmDelete = () => {
+    if (deleteProductId) {
+      setProductsList(prev => prev.filter(product => product.id !== deleteProductId));
+      toast({
+        title: "Product deleted",
+        description: "The product has been successfully deleted.",
+      });
+      setDeleteProductId(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteProductId(null);
+  };
 
   return (
     <div>
@@ -114,7 +145,11 @@ const ProductManagement = () => {
                           <span className="sr-only">Edit</span>
                         </Link>
                       </Button>
-                      <Button variant="ghost" size="icon">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => handleDeleteProduct(product.id)}
+                      >
                         <Trash className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
                       </Button>
@@ -133,6 +168,22 @@ const ProductManagement = () => {
           </Table>
         </div>
       </div>
+
+      <AlertDialog open={!!deleteProductId} onOpenChange={() => setDeleteProductId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the product.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <Footer />
     </div>
   );

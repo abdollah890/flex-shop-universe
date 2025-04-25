@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -11,6 +10,7 @@ import { ShoppingCart, Star, Minus, Plus, ArrowLeft } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types';
+import AddReview from '@/components/AddReview';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -52,6 +52,10 @@ const ProductDetail = () => {
     if (quantity > 1) {
       setQuantity(q => q - 1);
     }
+  };
+
+  const handleNewReview = () => {
+    console.log('Review added, refreshing product data...');
   };
 
   if (!product) {
@@ -212,8 +216,10 @@ const ProductDetail = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-gray-600">No reviews yet.</p>
+                    <p className="text-gray-600 mb-8">No reviews yet. Be the first to leave a review!</p>
                   )}
+                  
+                  <AddReview productId={product.id} onReviewAdded={handleNewReview} />
                 </TabsContent>
               </Tabs>
             </div>
